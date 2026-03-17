@@ -15,6 +15,7 @@ WORKDIR /app
 
 COPY . .
 
+RUN rm -rf build/
 RUN cmake -B build -DCMAKE_BUILD_TYPE=Release
 RUN cmake --build build --parallel
 
