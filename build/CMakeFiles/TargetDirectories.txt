@@ -1,0 +1,6 @@
+/root/embedded-cicd-pipeline/build/CMakeFiles/sensor_lib.dir
+/root/embedded-cicd-pipeline/build/CMakeFiles/sensor_main.dir
+/root/embedded-cicd-pipeline/build/CMakeFiles/run_tests.dir
+/root/embedded-cicd-pipeline/build/CMakeFiles/test.dir
+/root/embedded-cicd-pipeline/build/CMakeFiles/edit_cache.dir
+/root/embedded-cicd-pipeline/build/CMakeFiles/rebuild_cache.dir

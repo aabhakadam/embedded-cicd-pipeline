@@ -1,0 +1,50 @@
+name: Embedded CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake g++ git libgtest-dev
+
+    - name: Configure CMake
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build
+      run: cmake --build build --parallel
+
+    - name: Run unit tests
+      run: ./build/run_tests
+
+    - name: Run CTest
+      run: ctest --test-dir build --output-on-failure
+
+    - name: Build Docker image
+      run: docker build -t embedded-sensor-tests .
+
+    - name: Run tests in Docker container
+      run: docker run embedded-sensor-tests
+
+  code-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install cppcheck
+      run: sudo apt-get install -y cppcheck
+
+    - name: Run static analysis
+      run: cppcheck --error-exitcode=1 --enable=warning,style src/
